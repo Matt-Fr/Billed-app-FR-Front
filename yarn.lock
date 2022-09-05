@@ -18,7 +18,7 @@
     "invariant" "^2.2.4"
     "semver" "^5.5.0"
 
-"@babel/core@^7.0.0", "@babel/core@^7.0.0-0", "@babel/core@^7.1.0", "@babel/core@^7.7.5", "@babel/core@^7.9.0":
+"@babel/core@^7.1.0", "@babel/core@^7.7.5", "@babel/core@^7.9.0":
   "integrity" "sha512-3A0tS0HWpy4XujGc7QtOIHTeNwUgWaZc/WuS5YQrfhU67jnVmsD6OGPc1AKHH0LJHQICGncy3+YUjIhVlfDdcA=="
   "resolved" "https://registry.npmjs.org/@babel/core/-/core-7.10.4.tgz"
   "version" "7.10.4"
@@ -1147,7 +1147,7 @@
   "resolved" "https://registry.npmjs.org/@sinonjs/text-encoding/-/text-encoding-0.7.1.tgz"
   "version" "0.7.1"
 
-"@testing-library/dom@^7.20.0", "@testing-library/dom@>=7.16.0":
+"@testing-library/dom@^7.20.0":
   "integrity" "sha512-TywaC+qDGm/Ro34kRYkFQPdT+pxSF4UjZGLIqcGfFQH5IGR43Y7sGLPnkieIW/GNsu337oxNsLUAgpI0JWhXHw=="
   "resolved" "https://registry.npmjs.org/@testing-library/dom/-/dom-7.20.0.tgz"
   "version" "7.20.0"
@@ -3173,7 +3173,7 @@
     "jest-regex-util" "^26.0.0"
     "jest-snapshot" "^26.1.0"
 
-"jest-resolve@*", "jest-resolve@^26.1.0":
+"jest-resolve@^26.1.0":
   "integrity" "sha512-KsY1JV9FeVgEmwIISbZZN83RNGJ1CC+XUCikf/ZWJBX/tO4a4NvA21YixokhdR9UnmPKKAC4LafVixJBrwlmfg=="
   "resolved" "https://registry.npmjs.org/jest-resolve/-/jest-resolve-26.1.0.tgz"
   "version" "26.1.0"
@@ -3339,7 +3339,7 @@
     "merge-stream" "^2.0.0"
     "supports-color" "^7.0.0"
 
-"jest@^26.1.0", "jest@19.x - 26.x":
+"jest@^26.1.0":
   "integrity" "sha512-LIti8jppw5BcQvmNJe4w2g1N/3V68HUfAv9zDVm7v+VAtQulGhH0LnmmiVkbNE4M4I43Bj2fXPiBGKt26k9tHw=="
   "resolved" "https://registry.npmjs.org/jest/-/jest-26.1.0.tgz"
   "version" "26.1.0"
