@@ -25,10 +25,8 @@ export default class NewBill {
       .files[0];
     const filePath = e.target.value.split(/\\/g);
     const fileName = filePath[filePath.length - 1];
-
     const fileExtension = fileName.split(".").pop(); // récupère seulement l'extension du fichier
     const fileFormats = ["jpg", "jpeg", "png"]; // défini formats autorisés
-
     const formData = new FormData();
     const email = JSON.parse(localStorage.getItem("user")).email;
     formData.append("file", file);
