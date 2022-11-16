@@ -45,7 +45,7 @@ export default class Login {
         this.document.body.style.backgroundColor = "#fff";
       });
   };
-
+  // bug 2: changed employee to Admin
   handleSubmitAdmin = (e) => {
     e.preventDefault();
     const user = {

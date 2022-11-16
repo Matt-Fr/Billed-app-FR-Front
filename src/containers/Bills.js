@@ -42,7 +42,7 @@ export default class {
         .list()
         .then((snapshot) => {
           //fixed the first bug by sorting date
-          snapshot.sort((a, b) => new Date(b.date) - new Date(a.date));
+          // snapshot.sort((a, b) => new Date(b.date) - new Date(a.date));
           const bills = snapshot.map((doc) => {
             try {
               return {
