@@ -23,6 +23,7 @@ const rows = (data) => {
   return data && data.length ? data.map((bill) => row(bill)).join("") : "";
 };
 
+//fix the first bug
 export default ({ data: bills, loading, error }) => {
   if (bills) bills.sort((a, b) => new Date(b.date) - new Date(a.date));
   const modal = () => `
