@@ -45,66 +45,66 @@ describe("Given I am connected as an employee", () => {
       expect(dates).toEqual(datesSorted);
     });
   });
-});
 
-describe("When employee click on new bill", () => {
-  test("Then the form should be displayed", () => {
-    const onNavigate = (pathname) => {
-      document.body.innerHTML = ROUTES({ pathname });
-    };
+  describe("When employee click on new bill", () => {
+    test("Then the form should be displayed", () => {
+      const onNavigate = (pathname) => {
+        document.body.innerHTML = ROUTES({ pathname });
+      };
 
-    Object.defineProperty(window, "localStorage", {
-      value: localStorageMock,
+      Object.defineProperty(window, "localStorage", {
+        value: localStorageMock,
+      });
+      window.localStorage.setItem(
+        "user",
+        JSON.stringify({
+          type: "Employee",
+        })
+      );
+
+      const billsDashboard = new Bills({
+        document,
+        onNavigate,
+        store: null,
+        bills: bills,
+        localStorage: window.localStorage,
+      });
+
+      const newBillBtn = screen.getByTestId("btn-new-bill");
+      const handleClickNewBill = jest.fn(billsDashboard.handleClickNewBill);
+
+      newBillBtn.addEventListener("click", handleClickNewBill);
+      userEvent.click(newBillBtn);
+
+      expect(handleClickNewBill).toHaveBeenCalled();
+      expect(screen.getByText("Envoyer une note de frais")).toBeTruthy();
+      expect(screen.getByTestId("form-new-bill")).toBeTruthy();
     });
-    window.localStorage.setItem(
-      "user",
-      JSON.stringify({
-        type: "Employee",
-      })
-    );
-
-    const billsDashboard = new Bills({
-      document,
-      onNavigate,
-      store: null,
-      bills: bills,
-      localStorage: window.localStorage,
-    });
-
-    const newBillBtn = screen.getByTestId("btn-new-bill");
-    const handleClickNewBill = jest.fn(billsDashboard.handleClickNewBill);
-
-    newBillBtn.addEventListener("click", handleClickNewBill);
-    userEvent.click(newBillBtn);
-
-    expect(handleClickNewBill).toHaveBeenCalled();
-    expect(screen.getByText("Envoyer une note de frais")).toBeTruthy();
-    expect(screen.getByTestId("form-new-bill")).toBeTruthy();
   });
-});
 
-describe("When I click on the eye icon", () => {
-  test("Then it should render a modal", () => {
-    const onNavigate = (pathname) => {
-      document.body.innerHTML = ROUTES({ pathname });
-    };
-    document.body.innerHTML = BillsUI({ data: bills });
-    const bills2 = new Bills({
-      document,
-      onNavigate,
-      localStorage: window.localStorage,
+  describe("When I click on the eye icon", () => {
+    test("Then it should render a modal", () => {
+      const onNavigate = (pathname) => {
+        document.body.innerHTML = ROUTES({ pathname });
+      };
+      document.body.innerHTML = BillsUI({ data: bills });
+      const bills2 = new Bills({
+        document,
+        onNavigate,
+        localStorage: window.localStorage,
+      });
+      const handleClickIconEye = jest.fn((icon) =>
+        bills2.handleClickIconEye(icon)
+      );
+      const modaleFile = document.getElementById("modaleFile");
+      const iconEye = screen.getAllByTestId("icon-eye");
+      $.fn.modal = jest.fn(() => modaleFile.classList.add("show"));
+      iconEye.forEach((icon) => {
+        icon.addEventListener("click", handleClickIconEye(icon));
+        userEvent.click(icon);
+        expect(handleClickIconEye).toHaveBeenCalled();
+      });
+      expect(modaleFile.classList.contains("show")).toBe(true);
     });
-    const handleClickIconEye = jest.fn((icon) =>
-      bills2.handleClickIconEye(icon)
-    );
-    const modaleFile = document.getElementById("modaleFile");
-    const iconEye = screen.getAllByTestId("icon-eye");
-    $.fn.modal = jest.fn(() => modaleFile.classList.add("show"));
-    iconEye.forEach((icon) => {
-      icon.addEventListener("click", handleClickIconEye(icon));
-      userEvent.click(icon);
-      expect(handleClickIconEye).toHaveBeenCalled();
-    });
-    expect(modaleFile.classList.contains("show")).toBe(true);
   });
 });
