@@ -88,13 +88,13 @@ describe("Given I am connected as an employee", () => {
         document.body.innerHTML = ROUTES({ pathname });
       };
       document.body.innerHTML = BillsUI({ data: bills });
-      const bills2 = new Bills({
+      const billsContainer = new Bills({
         document,
         onNavigate,
         localStorage: window.localStorage,
       });
       const handleClickIconEye = jest.fn((icon) =>
-        bills2.handleClickIconEye(icon)
+        billsContainer.handleClickIconEye(icon)
       );
       const modaleFile = document.getElementById("modaleFile");
       const iconEye = screen.getAllByTestId("icon-eye");
