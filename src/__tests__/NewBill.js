@@ -39,6 +39,7 @@ describe("Given I am connected as an employee", () => {
       const mailIcon = screen.getByTestId("icon-mail"); // récupère l'icône par son testid
       expect(mailIcon).toHaveClass("active-icon"); //check si l'icône est en surbrillance - on vérifie si l'élément a la classe correspondante
     });
+
     // le formulaire doit être présent à l'écran avec tous ses champs
     test("Then the form should be displayed", () => {
       const html = NewBillUI();
