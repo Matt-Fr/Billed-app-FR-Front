@@ -153,6 +153,72 @@ describe("Given I am connected as an employee", () => {
     });
   });
 
+  describe("Given I am a user connected as Employee", () => {
+    describe("When I submit the form completed", () => {
+      test("Then the bill is created", async () => {
+        const html = NewBillUI();
+        document.body.innerHTML = html;
+
+        const onNavigate = (pathname) => {
+          document.body.innerHTML = ROUTES({ pathname });
+        };
+
+        Object.defineProperty(window, "localStorage", {
+          value: localStorageMock,
+        });
+        window.localStorage.setItem(
+          "user",
+          JSON.stringify({
+            type: "Employee",
+            email: "azerty@email.com",
+          })
+        );
+
+        const newBill = new NewBill({
+          document,
+          onNavigate,
+          store: null,
+          localStorage: window.localStorage,
+        });
+
+        const validBill = {
+          type: "Restaurants et bars",
+          name: "Vol Paris Londres",
+          date: "2022-02-15",
+          amount: 200,
+          vat: 70,
+          pct: 30,
+          commentary: "Commentary",
+          fileUrl: "../img/0.jpg",
+          fileName: "test.jpg",
+          status: "pending",
+        };
+
+        // Load the values in fields
+        screen.getByTestId("expense-type").value = validBill.type;
+        screen.getByTestId("expense-name").value = validBill.name;
+        screen.getByTestId("datepicker").value = validBill.date;
+        screen.getByTestId("amount").value = validBill.amount;
+        screen.getByTestId("vat").value = validBill.vat;
+        screen.getByTestId("pct").value = validBill.pct;
+        screen.getByTestId("commentary").value = validBill.commentary;
+
+        newBill.fileName = validBill.fileName;
+        newBill.fileUrl = validBill.fileUrl;
+
+        newBill.updateBill = jest.fn();
+        const handleSubmit = jest.fn((e) => newBill.handleSubmit(e));
+
+        const form = screen.getByTestId("form-new-bill");
+        form.addEventListener("submit", handleSubmit);
+        fireEvent.submit(form);
+
+        expect(handleSubmit).toHaveBeenCalled();
+        expect(newBill.updateBill).toHaveBeenCalled();
+      });
+    });
+  });
+
   describe("When an error occurs on API", () => {
     beforeEach(() => {
       jest.spyOn(mockStore, "bills");
