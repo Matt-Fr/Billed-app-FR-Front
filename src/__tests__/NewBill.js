@@ -80,7 +80,7 @@ describe("Given I am connected as an employee", () => {
         });
 
         const changeFile = jest.fn((e) => newBillContainer.handleChangeFile(e)); // créé la fonction à tester
-        const file = screen.getByTestId("file"); // récupère l'input file
+        const file = screen.getByTestId("file"); // récupère le btn input file
         expect(file).toBeTruthy(); // vérifie qu'il soit bien présent à l'écran
 
         const testFile = new File(["sample.jpg"], "sample.jpg", {
@@ -135,93 +135,17 @@ describe("Given I am connected as an employee", () => {
 });
 
 // TEST INTEGRATION GET METHOD
-describe("Given I am connected as an employee", () => {
-  describe("When I am on Bills Page", () => {
-    test("fetches bills from mock API GET", async () => {
-      localStorage.setItem(
-        "user",
-        JSON.stringify({ type: "Employee", email: "a@a" })
-      );
-      const root = document.createElement("div");
-      root.setAttribute("id", "root");
-      document.body.append(root);
-      router();
-      window.onNavigate(ROUTES_PATH.Bills);
-      expect(
-        await waitFor(() => screen.getByText("Mes notes de frais"))
-      ).toBeTruthy();
-    });
-  });
 
-  describe("Given I am a user connected as Employee", () => {
-    describe("When I submit the form completed", () => {
-      test("Then the bill is created", async () => {
-        const html = NewBillUI();
-        document.body.innerHTML = html;
+describe("Given I am a user connected as Employee", () => {
+  describe("When I submit the form completed", () => {
+    test("Then the bill is created", async () => {
+      const html = NewBillUI();
+      document.body.innerHTML = html;
 
-        const onNavigate = (pathname) => {
-          document.body.innerHTML = ROUTES({ pathname });
-        };
+      const onNavigate = (pathname) => {
+        document.body.innerHTML = ROUTES({ pathname });
+      };
 
-        Object.defineProperty(window, "localStorage", {
-          value: localStorageMock,
-        });
-        window.localStorage.setItem(
-          "user",
-          JSON.stringify({
-            type: "Employee",
-            email: "azerty@email.com",
-          })
-        );
-
-        const newBill = new NewBill({
-          document,
-          onNavigate,
-          store: null,
-          localStorage: window.localStorage,
-        });
-
-        const validBill = {
-          type: "Restaurants et bars",
-          name: "Vol Paris Londres",
-          date: "2022-02-15",
-          amount: 200,
-          vat: 70,
-          pct: 30,
-          commentary: "Commentary",
-          fileUrl: "../img/0.jpg",
-          fileName: "test.jpg",
-          status: "pending",
-        };
-
-        // Load the values in fields
-        screen.getByTestId("expense-type").value = validBill.type;
-        screen.getByTestId("expense-name").value = validBill.name;
-        screen.getByTestId("datepicker").value = validBill.date;
-        screen.getByTestId("amount").value = validBill.amount;
-        screen.getByTestId("vat").value = validBill.vat;
-        screen.getByTestId("pct").value = validBill.pct;
-        screen.getByTestId("commentary").value = validBill.commentary;
-
-        newBill.fileName = validBill.fileName;
-        newBill.fileUrl = validBill.fileUrl;
-
-        newBill.updateBill = jest.fn();
-        const handleSubmit = jest.fn((e) => newBill.handleSubmit(e));
-
-        const form = screen.getByTestId("form-new-bill");
-        form.addEventListener("submit", handleSubmit);
-        fireEvent.submit(form);
-
-        expect(handleSubmit).toHaveBeenCalled();
-        expect(newBill.updateBill).toHaveBeenCalled();
-      });
-    });
-  });
-
-  describe("When an error occurs on API", () => {
-    beforeEach(() => {
-      jest.spyOn(mockStore, "bills");
       Object.defineProperty(window, "localStorage", {
         value: localStorageMock,
       });
@@ -229,44 +153,102 @@ describe("Given I am connected as an employee", () => {
         "user",
         JSON.stringify({
           type: "Employee",
-          email: "a@a",
+          email: "azerty@email.com",
         })
       );
-      const root = document.createElement("div");
-      root.setAttribute("id", "root");
-      document.body.appendChild(root);
-      router();
-    });
 
-    // TEST 404 ERROR
-    test("fetches bills from an API and fails with 404 message error", async () => {
-      mockStore.bills.mockImplementationOnce(() => {
-        return {
-          list: () => {
-            return Promise.reject(new Error("Erreur 404"));
-          },
-        };
-      });
-      window.onNavigate(ROUTES_PATH.Bills);
-      await new Promise(process.nextTick);
-      const message = await waitFor(() => screen.getByText(/Erreur 404/));
-      expect(message).toBeTruthy();
-    });
-
-    // TEST 500 ERROR
-    test("fetches messages from an API and fails with 500 message error", async () => {
-      mockStore.bills.mockImplementationOnce(() => {
-        return {
-          list: () => {
-            return Promise.reject(new Error("Erreur 500"));
-          },
-        };
+      const newBill = new NewBill({
+        document,
+        onNavigate,
+        store: null,
+        localStorage: window.localStorage,
       });
 
-      window.onNavigate(ROUTES_PATH.Bills);
-      await new Promise(process.nextTick);
-      const message = await waitFor(() => screen.getByText(/Erreur 500/));
-      expect(message).toBeTruthy();
+      const validBill = {
+        type: "Restaurants et bars",
+        name: "Vol Paris Londres",
+        date: "2022-02-15",
+        amount: 200,
+        vat: 70,
+        pct: 30,
+        commentary: "Commentary",
+        fileUrl: "../img/0.jpg",
+        fileName: "test.jpg",
+        status: "pending",
+      };
+
+      // Load the values in fields
+      screen.getByTestId("expense-type").value = validBill.type;
+      screen.getByTestId("expense-name").value = validBill.name;
+      screen.getByTestId("datepicker").value = validBill.date;
+      screen.getByTestId("amount").value = validBill.amount;
+      screen.getByTestId("vat").value = validBill.vat;
+      screen.getByTestId("pct").value = validBill.pct;
+      screen.getByTestId("commentary").value = validBill.commentary;
+
+      newBill.fileName = validBill.fileName;
+      newBill.fileUrl = validBill.fileUrl;
+
+      newBill.updateBill = jest.fn();
+      const handleSubmit = jest.fn((e) => newBill.handleSubmit(e));
+
+      const form = screen.getByTestId("form-new-bill");
+      form.addEventListener("submit", handleSubmit);
+      fireEvent.submit(form);
+
+      expect(handleSubmit).toHaveBeenCalled();
+      expect(newBill.updateBill).toHaveBeenCalled();
     });
+  });
+});
+
+describe("When an error occurs on API", () => {
+  beforeEach(() => {
+    jest.spyOn(mockStore, "bills");
+    Object.defineProperty(window, "localStorage", {
+      value: localStorageMock,
+    });
+    window.localStorage.setItem(
+      "user",
+      JSON.stringify({
+        type: "Employee",
+        email: "a@a",
+      })
+    );
+    const root = document.createElement("div");
+    root.setAttribute("id", "root");
+    document.body.appendChild(root);
+    router();
+  });
+
+  // TEST 404 ERROR
+  test("fetches bills from an API and fails with 404 message error", async () => {
+    mockStore.bills.mockImplementationOnce(() => {
+      return {
+        list: () => {
+          return Promise.reject(new Error("Erreur 404"));
+        },
+      };
+    });
+    window.onNavigate(ROUTES_PATH.Bills);
+    await new Promise(process.nextTick);
+    const message = await waitFor(() => screen.getByText(/Erreur 404/));
+    expect(message).toBeTruthy();
+  });
+
+  // TEST 500 ERROR
+  test("fetches messages from an API and fails with 500 message error", async () => {
+    mockStore.bills.mockImplementationOnce(() => {
+      return {
+        list: () => {
+          return Promise.reject(new Error("Erreur 500"));
+        },
+      };
+    });
+
+    window.onNavigate(ROUTES_PATH.Bills);
+    await new Promise(process.nextTick);
+    const message = await waitFor(() => screen.getByText(/Erreur 500/));
+    expect(message).toBeTruthy();
   });
 });

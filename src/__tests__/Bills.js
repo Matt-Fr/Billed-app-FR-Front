@@ -45,6 +45,7 @@ describe("Given I am connected as an employee", () => {
       });
     });
 
+    //test error
     describe("When I am on Bills page with an error", () => {
       test("Then Error page should be displayed", () => {
         const html = BillsUI({ data: bills, error: true });
@@ -54,6 +55,7 @@ describe("Given I am connected as an employee", () => {
       });
     });
 
+    //date sorted
     describe("When I am on Bills page, dates should be deplay from ealiest to latest", () => {
       test("Then, should return error", () => {
         document.body.innerHTML = BillsUI({ data: bills });
