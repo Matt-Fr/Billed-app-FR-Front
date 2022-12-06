@@ -87,7 +87,7 @@ describe("Given I am connected as an employee", () => {
         const onNavigate = (pathname) => {
           document.body.innerHTML = ROUTES({ pathname });
         };
-        const mockBills = new Bills({
+        const billsContainer = new Bills({
           document,
           onNavigate,
           localStorage: window.localStorage,
@@ -95,7 +95,9 @@ describe("Given I am connected as an employee", () => {
         });
         const btnNewBill = screen.getByTestId("btn-new-bill");
         // MOCK FUNCTION HANDLE CLICK NEW BILL
-        const mockFunctionHandleClick = jest.fn(mockBills.handleClickNewBill);
+        const mockFunctionHandleClick = jest.fn(
+          billsContainer.handleClickNewBill
+        );
         btnNewBill.addEventListener("click", mockFunctionHandleClick);
         fireEvent.click(btnNewBill);
         expect(mockFunctionHandleClick).toHaveBeenCalled();
@@ -153,6 +155,7 @@ describe("Given I am connected as an employee", () => {
       expect(
         await waitFor(() => screen.getByText("Mes notes de frais"))
       ).toBeTruthy();
+      expect(screen.getByTestId("tbody")).toBeTruthy();
     });
   });
 
