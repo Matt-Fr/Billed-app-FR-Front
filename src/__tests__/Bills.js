@@ -131,8 +131,8 @@ describe("Given I am connected as an employee", () => {
         billsContainer.handleClickIconEye;
       });
       const firstEyeIcon = screen.getAllByTestId("icon-eye")[0];
-      firstEyeIcon.addEventListener("click", handleClickIconEye);
-      fireEvent.click(firstEyeIcon);
+      firstEyeIcon.addEventListener("click", handleClickIconEye); //écoute l'événement du clic
+      fireEvent.click(firstEyeIcon); //simule le clic
       expect(handleClickIconEye).toHaveBeenCalled();
       expect($.fn.modal).toHaveBeenCalled();
     });

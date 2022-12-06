@@ -96,7 +96,7 @@ export default class {
 
   handleEditTicket(e, bill, bills) {
     // added a stopEventPropagation
-    e.stopImmediatePropagation();
+    e.stopImmediatePropagation(); //stop the rest of the event handlers from being executed
     if (this.counter === undefined || this.id !== bill.id) this.counter = 0;
     if (this.id === undefined || this.id !== bill.id) this.id = bill.id;
     if (this.counter % 2 === 0) {

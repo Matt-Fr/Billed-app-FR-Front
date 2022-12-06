@@ -39,22 +39,22 @@ export default class NewBill {
         "Le format du fichier sélectionné est interdit. Veuillez sélectionner un fichier png, jpg ou jpeg."
       );
       fileInput.value = "";
-    }
-    this.store
-      .bills()
-      .create({
-        data: formData,
-        headers: {
-          noContentType: true,
-        },
-      })
-      .then(({ fileUrl, key }) => {
-        console.log(fileUrl, fileName);
-        this.billId = key;
-        this.fileUrl = fileUrl;
-        this.fileName = fileName;
-      })
-      .catch((error) => console.error(error));
+    } else
+      this.store
+        .bills()
+        .create({
+          data: formData,
+          headers: {
+            noContentType: true,
+          },
+        })
+        .then(({ fileUrl, key }) => {
+          console.log(fileUrl, fileName);
+          this.billId = key;
+          this.fileUrl = fileUrl;
+          this.fileName = fileName;
+        })
+        .catch((error) => console.error(error));
   };
 
   handleSubmit = (e) => {
